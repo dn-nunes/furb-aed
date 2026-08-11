@@ -1,14 +1,14 @@
-public class StaticList {
-    private int[] data;
+public class StaticList<T> {
+    private Object[] data;
     private int length;
 
     public StaticList() {
-        data = new int[10];
+        data = new Object[10];
         length = 0;
     }
 
     private void resize() {
-        var newVector = new int[data.length + 10];
+        var newVector = new Object[data.length + 10];
 
         for (int i = 0; i < length; i++) {
             newVector[i] = data[i];
@@ -17,7 +17,7 @@ public class StaticList {
         data = newVector;
     }
 
-    public void insert(int value) {
+    public void insert(T value) {
         if (length == data.length)
             resize();
 
@@ -26,13 +26,13 @@ public class StaticList {
     }
 
     public void show() {
-        System.out.println("Números da lista:");
+        System.out.println("Elementos da lista:");
         for (int i = 0; i < length; i++) {
             System.out.println(data[i]);
         }
     }
 
-    public int search(int value) {
+    public int search(T value) {
         for (int i = 0; i < length; i++) {
             if (data[i] == value) {
                 return i;
@@ -42,7 +42,7 @@ public class StaticList {
         return -1;
     }
 
-    public void remove(int value) {
+    public void remove(T value) {
         int position = search(value);
         if (position != -1) {
             for (int i = position; i < length - 1; i++) {
@@ -54,11 +54,11 @@ public class StaticList {
     }
 
     public void clear() {
-        data = new int[10];
+        data = new Object[10];
         length = 0;
     }
 
-    public int getElement(int position) {
+    public Object getElement(int position) {
         if (position < 0 || position >= length) {
             throw new IndexOutOfBoundsException();
         }
@@ -72,6 +72,32 @@ public class StaticList {
 
     public int getSize() {
         return length;
+    }
+
+    
+    // public void invert() {
+    //     var invertedList = new Object[data.length];
+        
+    //     int invertedListIndex = 0;
+    //     for (int i = length; i != 0; i--) {
+    //         invertedList[invertedListIndex] = data[length - 1];
+    //         invertedListIndex++;
+    //     }
+
+    //     data = invertedList;
+    // }
+    
+    public void invert() {
+        for (int x = 0; x < length; x++) {            
+
+            for (int i = length; i != 0; i--) {
+                data[i] = data[i - 1];
+            }
+
+            data[x] = data[length];
+        }
+
+        data[length] = null;
     }
 
     @Override public String toString() {
