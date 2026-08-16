@@ -1,126 +1,162 @@
 import org.junit.jupiter.api.Test;
 
+import java.awt.print.PrinterGraphics;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StaticListTest {
 
     @Test
-    void testarInclusaoDeDados() {
-        StaticList lista = new StaticList();
+    void testDataInsert() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        assertEquals("5,10,15,20", lista.toString());
+        assertEquals("5,10,15,20", list.toString());
     }
 
     @Test
-    void testarTamanhoDaLista() {
-        StaticList lista = new StaticList();
+    void testarListLength() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        assertEquals(4, lista.getSize());
+        assertEquals(4, list.getSize());
     }
 
     @Test
-    void testarBuscaElementoExistente() {
-        StaticList lista = new StaticList();
+    void testSearchExistentElement() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        assertEquals(2, lista.search(15));
+        assertEquals(2, list.search(15));
     }
 
     @Test
-    void testarBuscaElementoInexistente() {
-        StaticList lista = new StaticList();
+    void testSearchNotExistentElement() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        assertEquals(-1, lista.search(30));
+        assertEquals(-1, list.search(30));
     }
 
     @Test
-    void testarRetirar() {
-        StaticList lista = new StaticList();
+    void testRemove() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        lista.remove(10);
+        list.remove(10);
 
-        assertEquals("5,15,20", lista.toString());
-        assertEquals(3, lista.getSize());
+        assertEquals("5,15,20", list.toString());
+        assertEquals(3, list.getSize());
     }
 
     @Test
-    void testarRedimensionamento() {
-        StaticList lista = new StaticList();
+    void testResize() {
+        var list = new StaticList<Integer>();
 
         for (int i = 1; i <= 15; i++) {
-            lista.insert(i);
+            list.insert(i);
         }
 
         assertEquals(
                 "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
-                lista.toString()
+                list.toString()
         );
 
-        assertEquals(15, lista.getSize());
+        assertEquals(15, list.getSize());
     }
 
     @Test
-    void testarObterElemento() {
-        StaticList lista = new StaticList();
+    void testGetElement() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        assertEquals(20, lista.getElement(3));
+        assertEquals(20, list.getElement(3));
     }
 
     @Test
-    void testarExcecaoObterElemento() {
-        StaticList lista = new StaticList();
+    void testGetElementException() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
         assertThrows(
                 IndexOutOfBoundsException.class,
-                () -> lista.getElement(5)
+                () -> list.getElement(5)
         );
     }
 
     @Test
-    void testarLiberar() {
-        StaticList lista = new StaticList();
+    void testClear() {
+        var list = new StaticList<Integer>();
 
-        lista.insert(5);
-        lista.insert(10);
-        lista.insert(15);
-        lista.insert(20);
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
 
-        lista.clear();
+        list.clear();
 
-        assertTrue(lista.isEmpty());
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    void testInvertEvenList() {
+        var list = new StaticList<Integer>();
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
+
+        list.invert();
+
+        assertEquals(20, list.getElement(0));
+        assertEquals(15, list.getElement(1));
+        assertEquals(10, list.getElement(2));
+        assertEquals(5, list.getElement(3));
+    }
+
+    @Test
+    void testInvertUnevenList() {
+        var list = new StaticList<Integer>();
+        list.insert(5);
+        list.insert(10);
+        list.insert(15);
+        list.insert(20);
+        list.insert(25);
+
+        list.invert();
+
+        assertEquals(25, list.getElement(0));
+        assertEquals(20, list.getElement(1));
+        assertEquals(15, list.getElement(2));
+        assertEquals(10, list.getElement(3));
+        assertEquals(5, list.getElement(4));
     }
 }

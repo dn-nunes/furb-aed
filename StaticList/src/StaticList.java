@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class StaticList<T> {
     private Object[] data;
     private int length;
@@ -34,7 +36,7 @@ public class StaticList<T> {
 
     public int search(T value) {
         for (int i = 0; i < length; i++) {
-            if (data[i] == value) {
+            if (Objects.equals(data[i], value)) {
                 return i;
             }
         }
@@ -58,12 +60,12 @@ public class StaticList<T> {
         length = 0;
     }
 
-    public Object getElement(int position) {
+    public T getElement(int position) {
         if (position < 0 || position >= length) {
             throw new IndexOutOfBoundsException();
         }
 
-        return data[position];
+        return (T) data[position];
     }
 
     public boolean isEmpty() {
@@ -74,30 +76,17 @@ public class StaticList<T> {
         return length;
     }
 
-    
-    // public void invert() {
-    //     var invertedList = new Object[data.length];
-        
-    //     int invertedListIndex = 0;
-    //     for (int i = length; i != 0; i--) {
-    //         invertedList[invertedListIndex] = data[length - 1];
-    //         invertedListIndex++;
-    //     }
-
-    //     data = invertedList;
-    // }
-    
     public void invert() {
-        for (int x = 0; x < length; x++) {            
+        var left = 0;
+        var right = length - 1;
 
-            for (int i = length; i != 0; i--) {
-                data[i] = data[i - 1];
-            }
-
-            data[x] = data[length];
+        while (left < right) {
+            var tempObj = data[right];
+            data[right] = data[left];
+            data[left] = tempObj;
+            left++;
+            right--;
         }
-
-        data[length] = null;
     }
 
     @Override public String toString() {
