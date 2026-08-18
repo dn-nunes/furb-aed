@@ -1,16 +1,16 @@
-public class LinkedList {
-    private LinkedListNode firstNode;
+public class LinkedList<T> {
+    private LinkedListNode<T> firstNode;
     
     public void LinkedList() {
         firstNode = null;
     }
 
-    public LinkedListNode getFirst() {
+    public LinkedListNode<T> getFirst() {
         return firstNode;
     }
 
-    public void Insert(int value) {
-        var newNode = new LinkedListNode(value);
+    public void insert(T value) {
+        var newNode = new LinkedListNode<T>(value);
         newNode.setNext(firstNode);
         firstNode = newNode;
     }
@@ -25,18 +25,14 @@ public class LinkedList {
     }
 
     public boolean isEmpty() {
-        if (firstNode == null) {
-            return true; 
-        }
-
-        return false;
+        return firstNode == null;
     }
 
-    public LinkedListNode search(int value) {
+    public LinkedListNode<T> search(T value) {
         var p = firstNode;
 
         while (p != null) {
-            if (p.getData() == value)
+            if (p.getData().equals(value))
                 return p;
 
             p = p.getNext();
@@ -45,11 +41,11 @@ public class LinkedList {
         return null;
     }
 
-    public void remove(int value) {
-        LinkedListNode before = null;
+    public void remove(T value) {
+        LinkedListNode<T> before = null;
 
         var p = firstNode;
-        while (p != null && (p.getData() == value)) {            
+        while (p != null && (p.getData().equals(value))) {            
             before = p;
             p = p.getNext();
         }
@@ -61,4 +57,34 @@ public class LinkedList {
                 before.setNext(p.getNext());
         }
     }
+
+    public int getLength() {
+        var c = 0;
+
+        var p = firstNode;
+        while (p != null)  {
+            c++;
+            p = p.getNext();
+        }
+
+        return c;
+    }
+
+    public LinkedListNode<T> getNode(int index) {
+        var c = 0;
+        
+        var p = firstNode;
+        while (p != null && c != index)  {
+            c++;
+
+            if (p.getNext() == null)
+                throw new IndexOutOfBoundsException();
+
+            p = p.getNext();
+        }
+
+        return p;
+    }
+
+
 }
