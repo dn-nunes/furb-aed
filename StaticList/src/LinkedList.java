@@ -1,7 +1,7 @@
 public class LinkedList<T> {
     private LinkedListNode<T> firstNode;
     
-    public void LinkedList() {
+    public LinkedList() {
         firstNode = null;
     }
 
@@ -45,7 +45,7 @@ public class LinkedList<T> {
         LinkedListNode<T> before = null;
 
         var p = firstNode;
-        while (p != null && (p.getData().equals(value))) {            
+        while (p != null && !(p.getData().equals(value))) {
             before = p;
             p = p.getNext();
         }
@@ -71,20 +71,38 @@ public class LinkedList<T> {
     }
 
     public LinkedListNode<T> getNode(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
         var c = 0;
-        
         var p = firstNode;
-        while (p != null && c != index)  {
-            c++;
 
-            if (p.getNext() == null)
-                throw new IndexOutOfBoundsException();
-
+        while (p != null && c < index) {
             p = p.getNext();
+            c++;
+        }
+
+        if (p == null) {
+            throw new IndexOutOfBoundsException();
         }
 
         return p;
     }
 
+    @Override
+    public String toString() {
+        var sb = new StringBuilder();
+        var p = firstNode;
 
+        while (p != null) {
+            sb.append(p.getData());
+            if (p.getNext() != null) {
+                sb.append(", ");
+            }
+            p = p.getNext();
+        }
+
+        return sb.toString();
+    }
 }

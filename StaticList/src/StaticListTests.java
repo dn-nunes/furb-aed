@@ -1,10 +1,7 @@
 import org.junit.jupiter.api.Test;
-
-import java.awt.print.PrinterGraphics;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StaticListTest {
+public class StaticListTests {
 
     @Test
     void testDataInsert() {
