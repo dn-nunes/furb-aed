@@ -5,14 +5,17 @@ public class DoublyLinkedList<T> {
         firstNode = null;
     }
 
-    public DoublyLinkedListNode<T> getFirst() {
+    public DoublyLinkedListNode<T> getFirstNode() {
         return firstNode;
     }
 
     public void insert(T value) {
         var newNode = new DoublyLinkedListNode<T>(value);
+
         newNode.setNext(firstNode);
-        firstNode.setBefore(newNode);
+        if (firstNode != null) {
+            firstNode.setBefore(newNode);
+        }
         firstNode = newNode;
     }
 
@@ -44,20 +47,44 @@ public class DoublyLinkedList<T> {
 
     public void remove(T value) {
         var p = search(value);
-        
+
         if (p == null)
         	return;
-        
+
         if (firstNode.equals(p)) {
-        	p.getNext().setBefore(null);
-        	firstNode = p.getNext();
+            firstNode = p.getNext();
         }
-        
-        if (p.getNext() == null)
-    		p.getBefore().setNext(null);
-        
-        p.getBefore().setNext(p.getNext());
-        p.getNext().setBefore(p.getBefore());
+
+        if (p.getBefore() != null)
+            p.getBefore().setNext(p.getNext());
+
+        if (p.getNext() != null)
+            p.getNext().setBefore(p.getBefore());
+    }
+
+    public void showInvertered() {
+        var p = firstNode;
+
+        while (p.getNext() != null) {
+            p = p.getNext();
+        }
+
+        while (p != null) {
+            System.out.println(p.getData());
+            p = p.getBefore();
+        }
+    }
+
+    public void clear() {
+        var p = firstNode;
+        DoublyLinkedListNode<T> nextNode = null;
+
+        while (p != null) {
+            nextNode = p.getNext();
+            p.setBefore(null);
+            p.setNext(null);
+            p = nextNode;
+        }
     }
 
     public int getLength() {
@@ -72,7 +99,7 @@ public class DoublyLinkedList<T> {
         return c;
     }
 
-    public LinkedListNode<T> getNode(int index) {
+    public DoublyLinkedListNode<T> getNode(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException();
         }
